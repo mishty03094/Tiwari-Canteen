@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #6c63ff;
+            color: white;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        form {
+            display: inline;
+        }
+
+        input[type="number"] {
+            padding: 5px;
+            font-size: 1em;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #6c63ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #5750d1;
+        }
+
+        a {
+            font-size: 1.2em;
+            color: #6c63ff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #5750d1;
+        }
+
+        .action-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .empty-cart {
+            text-align: center;
+            font-size: 1.2em;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Your Cart</h1>
+        <a href="{% url 'user_dashboard' %}">Back to Dashboard</a>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td>{{ item.item.name }}</td>
+                    <td>₹{{ item.total_price }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'add_to_cart' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="item_id" value="{{ item.item.id }}">
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1"
+                                max="{{ item.item.quantity }}" required>
+                            <button type="submit" name="update_quantity">Update Quantity</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="POST" action="{% url 'remove_from_cart' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="item_id" value="{{ item.item.id }}">
+                            <button type="submit" name="remove_item">Remove Item</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="action-links">
+            {% if cart_items %}
+            <a href="{% url 'cancel_order' %}">Cancel Order</a> |
+            <a href="{% url 'confirm_order' %}" class="btn btn-primary">Confirm Order</a>
+            {% else %}
+            <p class="empty-cart">Your cart is empty.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>
+

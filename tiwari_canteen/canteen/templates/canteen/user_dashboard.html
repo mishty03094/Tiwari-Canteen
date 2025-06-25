@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4;">
+    <!-- Header -->
+    <header style="background-color: #4CAF50; color: white; padding: 15px 20px; text-align: center;">
+        <h1>Welcome, {{ user.username }}</h1>
+        <a href="{% url 'logout' %}?next={% url 'welcome' %}" style="text-decoration: none; color: white; font-weight: bold;">Logout</a>
+    </header>
+
+    <main style="max-width: 1200px; margin: 20px auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+        <!-- Cart Section -->
+        <section>
+            <h2 style="color: #333; border-bottom: 2px solid #4CAF50; padding-bottom: 5px;">Your Cart</h2>
+            {% if cart_items %}
+                <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                    <thead>
+                        <tr style="background-color: #4CAF50; color: white; text-align: left;">
+                            <th style="padding: 10px;">Name</th>
+                            <th style="padding: 10px;">Price</th>
+                            <th style="padding: 10px;">Quantity</th>
+                            <th style="padding: 10px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_items %}
+                        <tr style="background-color: #f9f9f9; text-align: center;">
+                            <td style="padding: 10px;">{{ item.menu_item.name }}</td>
+                            <td style="padding: 10px;">₹{{ item.menu_item.price }}</td>
+                            <td style="padding: 10px;">
+                                <form method="POST" action="{% url 'update_cart_item' item.id %}" style="margin: 0;">
+                                    {% csrf_token %}
+                                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.menu_item.quantity }}" required style="width: 60px; padding: 5px;">
+                                    <button type="submit" style="padding: 5px 10px; background-color: #2196F3; color: white; border: none; border-radius: 5px;">Update</button>
+                                </form>
+                            </td>
+                            <td style="padding: 10px;">
+                                <form method="POST" action="{% url 'remove_from_cart' item.id %}" style="margin: 0;">
+                                    {% csrf_token %}
+                                    <button type="submit" style="padding: 5px 10px; background-color: #FF5722; color: white; border: none; border-radius: 5px;">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <h3 style="margin-top: 20px; color: #333;">Total: ₹{{ total_amount }}</h3>
+                <a href="{% url 'confirm_order' %}" style="text-decoration: none; padding: 10px 20px; background-color: #4CAF50; color: white; border-radius: 5px; margin-right: 10px;">Confirm Order</a>
+                <a href="{% url 'cancel_order' %}" style="text-decoration: none; padding: 10px 20px; background-color: #FF5722; color: white; border-radius: 5px;">Cancel Order</a>
+            {% else %}
+                <p style="color: #999;">Your cart is empty.</p>
+            {% endif %}
+        </section>
+
+        <!-- Menu Section -->
+        <section style="margin-top: 40px;">
+            <h2 style="color: #333; border-bottom: 2px solid #4CAF50; padding-bottom: 5px;">Available Menu Items</h2>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                <thead>
+                    <tr style="background-color: #4CAF50; color: white; text-align: left;">
+                        <th style="padding: 10px;">Name</th>
+                        <th style="padding: 10px;">Price</th>
+                        <th style="padding: 10px;">Quantity</th>
+                        <th style="padding: 10px;">Add to Cart</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in menu_items %}
+                    <tr style="background-color: #f9f9f9; text-align: center;">
+                        <td style="padding: 10px;">{{ item.name }}</td>
+                        <td style="padding: 10px;">₹{{ item.price }}</td>
+                        <td style="padding: 10px;">{{ item.quantity }}</td>
+                        <td style="padding: 10px;">
+                            <form method="POST" action="{% url 'add_to_cart' %}" style="margin: 0;">
+                                {% csrf_token %}
+                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                <input type="number" name="quantity" min="1" max="{{ item.quantity }}" required style="width: 60px; padding: 5px;">
+                                <button type="submit" style="padding: 5px 10px; background-color: #2196F3; color: white; border: none; border-radius: 5px;">Add to Cart</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>

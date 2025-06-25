@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 40px auto;
+            padding: 30px;
+            background: #fff;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+        .order-details {
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+        .order-details p {
+            margin: 10px 0;
+        }
+        .status {
+            font-weight: bold;
+            color: #4CAF50;
+            font-size: 1.3em;
+            margin-top: 20px;
+        }
+        .info-text {
+            font-size: 1em;
+            color: #555;
+            margin-top: 20px;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Confirmation</h1>
+        <p>Thank you for your order! Below are the details:</p>
+
+        <div class="order-details">
+            <p><strong>Order ID:</strong> {{ order.id }}</p>
+            <p><strong>Status:</strong></p>
+            <!-- This is where the order status should be visible -->
+            <div class="status">{{ order_status }}</div>
+        </div>
+
+        <p class="info-text">Your order will be prepared shortly. Please visit the dashboard to track its status.</p>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Tiwari Canteen. All Rights Reserved.</p>
+    </div>
+</body>
+</html>
+

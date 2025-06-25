@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Menu Item</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            border-color: #6c63ff;
+        }
+
+        input[type="checkbox"] {
+            margin-top: 5px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #6c63ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #5750d1;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #6c63ff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Add New Menu Item</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required placeholder="Enter item name">
+
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" step="0.01" required placeholder="Enter item price">
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" min="1" required placeholder="Enter item quantity">
+
+            <label for="available">Available:</label>
+            <input type="checkbox" id="available" name="available"> Mark as available
+
+            <button type="submit">Add Item</button>
+        </form>
+        <a href="{% url 'owner_dashboard' %}">Back to Dashboard</a>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Tiwari Canteen!</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f0f0f0; margin: 0; padding: 0; display: flex; align-items: center; justify-content: center; height: 100vh;">
+
+    <!-- Central Content Container -->
+    <div style="max-width: 700px; width: 90%; padding: 40px; text-align: center; background: #ffffff; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); border-radius: 15px;">
+
+        <!-- Welcome Title -->
+        <h1 style="font-size: 36px; color: #4CAF50; margin-bottom: 20px;">Welcome to Tiwari Canteen!</h1>
+
+        <!-- Description -->
+        <p style="font-size: 20px; color: #666; margin-bottom: 40px;">
+            Access the canteen services by logging in as Owner, Staff, or Student/Teacher.
+        </p>
+
+        <!-- Buttons Section -->
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+            <!-- Login as Owner/Staff -->
+            <a href="{% url 'login' %}" style="display: inline-block; padding: 15px 30px; font-size: 18px; color: white; text-decoration: none; background: #2196F3; border-radius: 8px; transition: 0.3s;">
+                Login as Owner/Staff
+            </a>
+
+            <!-- Login as Student/Teacher -->
+            <a href="{% url 'login' %}" style="display: inline-block; padding: 15px 30px; font-size: 18px; color: white; text-decoration: none; background: #FF9800; border-radius: 8px; transition: 0.3s;">
+                Login as Student/Teacher
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

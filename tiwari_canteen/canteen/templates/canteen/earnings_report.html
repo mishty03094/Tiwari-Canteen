@@ -1,0 +1,18 @@
+<!-- earnings_report.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earnings Report</title>
+</head>
+<body>
+    <h1>Earnings Report</h1>
+    <p><strong>Today's Earnings: </strong> ₹{{ today_earnings }}</p>
+    <p><strong>This Month's Earnings: </strong> ₹{{ monthly_earnings }}</p>
+    <p><strong>This Year's Earnings: </strong> ₹{{ yearly_earnings }}</p>
+
+    <a href="{% url 'owner_dashboard' %}">Back to Dashboard</a>
+</body>
+</html>
